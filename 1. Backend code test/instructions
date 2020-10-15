@@ -1,0 +1,27 @@
+1 Purpose 
+
+The goal of this test is to evaluate: 
+● Code structure, design and documentation 
+● Correctness, performance and concurrency issues 
+
+2 Description 
+
+Write a service that registers score points for different users, with the capability to return a ranking (high score list) and a user score and position.
+Use in-memory data structures. Do not use third party databases (h2, redis, etc). 
+Be aware of performance and concurrency issues that may arise when serving a large number of players in a concurrent/multithread environment. 
+Requirements: Java or Kotlin. 
+
+3 Implementation
+Clone this repository https://github.com/gauchoj/pipa_backend_test
+Implement the IScoreServices according to the documented methods.
+
+
+4 Validating your implementation
+
+Use the Validator::main method to validate your implementation. 
+Before running Validator::main, please edit Validator::resolveImplementation to return an instance of your implementation.
+This validator will always run the same score point operations in a sync and an async batch.
+
+5 Deliverable
+
+Reply to the e-mail with your implementation attached (java or kt files).
