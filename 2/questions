@@ -1,0 +1,38 @@
+1) Caminhada matinal
+
+Você acorda cedo num domingo para uma caminhada. Ainda está escuro e você percebe que acabou a luz e não tem nenhuma fonte de luz próxima. Numa gaveta, você deixou exatamente 10 meias soltas que formam 5 pares distintos. 
+Qual é a probabilidade de, pegando 2 meias aleatoriamente, elas formarem um par certo?
+
+
+2) Interrogatório em Gotham City
+
+Você é o(a) detetive de um caso muito estranho: um roubo na Rua Wayne Towers. O comissário Gordon trouxe o caso até você, junto com 3 pessoas que ele afirma serem o ladrão, a vítima e uma testemunha que presenciou o crime. O comissário não sabe quem é quem. Sabe apenas que, sempre que interrogados, cada um responderá da seguinte maneira:
+
+Ladrão: dissimulado, sempre mente
+Vítima: assustada, sempre responde não
+Testemunha: consciente, sempre fala a verdade
+
+As perguntas que você pode fazer são apenas:
+
+Você é a vítima?
+Você sabe quem é o ladrão?
+
+A sua missão é descobrir quem é quem fazendo no máximo 3 perguntas.
+
+Desenvolva e comente a sua solução.
+
+
+3) Desafio do Cesto
+
+Durante uma visita a um sítio no interior de Minas Gerais, um amigo brincalhão lhe fez um desafio usando um cesto de vime e uma bola de futebol. Propôs que você chutasse a bola dentro do cesto a uma distância de 10 metros. Ele ainda fez as seguintes ofertas:
+
+1 chute e um prêmio de 50 reais se a bola acertar o cesto.
+3 chutes e um prêmio de 20 reais se, em qualquer chute, a bola acertar o cesto.
+
+Se, durante o aquecimento, você conclui que a sua chance de acertar o cesto é de 10%, qual é a oferta que você escolhe (1 ou 3 chutes)?
+
+Se, no entanto, a sua chance fosse de 30%, isto mudaria a sua escolha?
+
+E, finalizando, qual seria a chance de acertar o cesto que igualaria a expectativa de prêmio das 2 ofertas?
+
+Desenvolva e comente a sua solução.
