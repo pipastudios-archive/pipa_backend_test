@@ -9,6 +9,7 @@ The goal of this test is to evaluate:
 Write a service that registers score points for different users, with the capability to return a ranking (high score list) and a user score and position.
 Use in-memory data structures. Do not use third party databases (h2, redis, etc). 
 Be aware of performance and concurrency issues that may arise when serving a large number of players in a concurrent/multithread environment. 
+The validator uses a weighted workload of 100:100:1 (post/get/ranking) 
 Requirements: Java or Kotlin. 
 
 3 Implementation
