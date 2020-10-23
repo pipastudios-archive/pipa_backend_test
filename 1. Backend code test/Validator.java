@@ -1,21 +1,18 @@
 package tester.hr.validation;
 
-import java.nio.ByteBuffer;
-import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 import tester.hr.interfaces.IScore;
 import tester.hr.interfaces.IScoreService;
+
+import java.nio.ByteBuffer;
+import java.util.*;
+import java.util.concurrent.*;
 
 abstract public class Validator
 {
     static private IScoreService resolveImplementation()
     {
         // TODO return your ScoreService implementation
-        // return new ScoreService();
+//        return new ScoreService();
     }
 
     static private class ScoreOperation
@@ -129,49 +126,61 @@ abstract public class Validator
         return operations;
     }
 
-    static private void run(ScoreOperation[] operations, Executor executor, int seed)
-    {
+    static private void run(ScoreOperation[] operations, Executor executor, int seed) throws InterruptedException {
         IScoreService service = resolveImplementation();
 
         List<Runnable> allOperations = new ArrayList<>();
 
         int count = 0;
+        CountDownLatch latch = new CountDownLatch(200_999);
         for (ScoreOperation op: operations)
         {
-            allOperations.add(() -> service.postScore(op.userId, op.points));
-            allOperations.add(() -> service.retrieveScore(op.userId));
+            allOperations.add(() -> {
+                service.postScore(op.userId, op.points);
+                latch.countDown();
+            });
+            allOperations.add(() -> {
+                service.retrieveScore(op.userId);
+                latch.countDown();
+            });
             if (++count % 100 == 0) allOperations.add(() -> {
                 List<IScore> iScores = service.retrieveRanking();
                 checkRanking(iScores);
+                latch.countDown();
             });
         }
 
         Collections.shuffle(allOperations, new Random(seed));
         allOperations.forEach(executor::execute);
 
+        latch.await();
+
         service.retrieveRanking().forEach(s -> {
-            assert s.getScore() == pointsMap.get(s.getUserId());
-//            System.out.println(s.ticker());
+//            System.out.println(s.ticker() + " " + pointsMap.get(s.getUserId()));
+            if (s.getScore() != pointsMap.get(s.getUserId())) throw new RuntimeException("Final ranking error");
         });
     }
 
     static private void checkRanking(List<IScore> iScores)
     {
-        int pos = 0;
-        long prevScore = 0;
+        int prevPos = 0;
+        long prevScore = Long.MAX_VALUE;
         for (IScore score : iScores)
         {
-            assert score.getPosition() == pos+1;
-            assert score.getScore() > prevScore;
-            pos = score.getPosition();
+            int currPos = score.getPosition();
+            long currScore = score.getScore();
+            if (currPos < prevPos) throw new RuntimeException("Ranking position error");
+            if (currScore > prevScore) throw new RuntimeException("Ranking score error");
+            if (currPos == prevPos && currScore != prevScore) throw new RuntimeException("Ranking tie error");
+            if (!(currPos == prevPos+1 || currPos == prevPos)) throw new RuntimeException("Ranking order error "+ currPos + " " + prevPos);
+            prevPos = score.getPosition();
             prevScore = score.getScore();
         }
     }
 
-    static public void main(String args[])
-    {
+    static public void main(String args[]) throws InterruptedException {
         int threads = 200; //Runtime.getRuntime().availableProcessors();
-        int seeds = 10;
+        int seeds = 30;
         System.out.println("using " + threads + " threads for async processing\n");
 
         ScoreOperation[] operations = createOperations();
