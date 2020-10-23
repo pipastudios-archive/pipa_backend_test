@@ -179,8 +179,8 @@ abstract public class Validator
     }
 
     static public void main(String args[]) throws InterruptedException {
-        int threads = 200; //Runtime.getRuntime().availableProcessors();
-        int seeds = 30;
+        int threads = Runtime.getRuntime().availableProcessors();
+        int seeds = 20;
         System.out.println("using " + threads + " threads for async processing\n");
 
         ScoreOperation[] operations = createOperations();
