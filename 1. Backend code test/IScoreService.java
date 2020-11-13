@@ -10,7 +10,7 @@ public interface IScoreService
     /** 
      * Post a user point score
      * @userId the user id
-     * @points the amount of points scored by the user, to be added to its score
+     * @points the amount of points scored by the user, to be added (+) to their current score
      */
     void postScore(String userId, long points);
     
